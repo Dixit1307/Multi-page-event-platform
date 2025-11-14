@@ -348,65 +348,340 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-          className="container mx-auto px-4 sm:px-6 lg:px-8"
-        >
-          <motion.div variants={fadeInUp} className="text-center mb-16">
-            <h2 className="mb-4">
-              <span className="text-4xl md:text-6xl">How It Works</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Three simple steps to collect all your event memories
-            </p>
-          </motion.div>
+      <section>
+        {/* step-1 */}
+        <div className="py-12 md:py-6 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* div Heading */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={stagger}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-6xl font-bold mb-4">
+                How does it work?
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                Hassle-free experience — for you and your guests.
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
-            {steps.map((step, index) => (
+            {/* Two-Column Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+              {/* Left Side - Text Content */}
               <motion.div
-                key={index}
                 variants={fadeInUp}
-                whileHover={{ y: -10 }}
-                className="relative"
+                className="flex flex-col justify-center max-w-lg mx-auto"
               >
-                <div className="relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow border border-gray-100">
-                  {/* Step Number */}
-                  <div
-                    className={`absolute -top-4 -left-4 w-12 h-12 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center text-white shadow-lg`}
-                  >
-                    {index + 1}
+                {/* Step Label */}
+                <div className="flex items-center mb-4">
+                  {/* <div className="bg-gradient-to-r from-[#FFB200] to-[#FF4D67] text-white rounded-full flex justify-center items-center w-[32px] h-[32px] mr-2 font-semibold text-sm shadow-md">
+                    1
+                  </div> */}
+                  <div className="flex justify-center items-center mr-2 w-8 h-8 rounded-full bg-gradient-to-r from-[#FFB200] to-[#FF4D67] text-white font-semibold text-[14px] leading-none shadow-md">
+                    1
                   </div>
 
-                  {/* Icon */}
-                  <div
-                    className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 mx-auto`}
+                  <span className="text-[#FF4D67] font-semibold text-lg">
+                    Step 1:
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                  Create your event
+                </h2>
+
+                {/* Description */}
+                <p className="text-gray-600 mb-8 leading-relaxed">
+                  Create a private digital album for guests to add photos, videos, and
+                  messages. Customize the title, date, colors, and backgrounds to make it
+                  your own!
+                </p>
+
+                {/* Button */}
+                <button className="inline-flex items-center w-fit justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-[#FFB200] to-[#FF4D67] hover:shadow-lg hover:scale-105 transition-all text-white border-0">
+                  Create Your Event
+                </button>
+              </motion.div>
+
+              {/* Right Side - Image */}
+              <motion.div variants={fadeInUp} className="flex justify-center">
+                <img
+                  src="https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65db0b4d121420dd8b1c384e_Group%2025-min.png"
+                  alt="Event Preview"
+                  className="w-full max-w-md rounded-2xl drop-shadow-xl h-[400px]"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* step-2 */}
+        <div className="py-12 md:py-6 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+              {/* LEFT — Video (replaces image) */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex justify-center md:justify-end"
+              >
+                <div className="relative max-w-md   rounded-2xl overflow-hidden">
+                  <video
+                    className="  h-[400px]"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65b8ee0bea37bcbfe971e817_Kululu%20(1)-poster-00001.jpg"
                   >
-                    <step.icon className="w-10 h-10 text-white" />
+                    <source src="https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65b8ee0bea37bcbfe971e817_Kululu%20(1)-transcode.mp4" type="video/mp4" />
+                    <source src="https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65b8ee0bea37bcbfe971e817_Kululu%20(1)-transcode.webm" type="video/webm" />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  {/* Optional overlay for tint */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent pointer-events-none" />
+                </div>
+
+              </motion.div>
+
+              {/* RIGHT — Text */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex flex-col justify-center max-w-lg mx-auto md:mx-0"
+              >
+                {/* Step label */}
+                <div className="flex items-center mb-4">
+                  <div className="flex justify-center items-center mr-2 w-8 h-8 rounded-full bg-gradient-to-r from-[#FFB200] to-[#FF4D67] text-white font-semibold text-[14px] leading-none shadow-md">
+                    2
                   </div>
+                  <span className="text-[#FF4D67] font-semibold text-lg">Step 2:</span>
+                </div>
 
-                  {/* Content */}
-                  <h3 className="mb-3 text-center">{step.title}</h3>
-                  <p className="text-gray-600 text-center">{step.description}</p>
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-snug">
+                  Share it with your guests
+                </h2>
 
-                  {/* Decorative Element */}
-                  {index < steps.length - 1 && (
-                    <motion.div
-                      animate={{ x: [0, 10, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="hidden md:block absolute -right-6 top-1/2 transform -translate-y-1/2"
-                    >
-                      <ArrowRight className="w-8 h-8 text-[#FFB200]" />
-                    </motion.div>
-                  )}
+                {/* Description */}
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Your guests can easily view or contribute photos and videos to your
+                  digital album by scanning the unique QR code or using the album URL —
+                  before, during, and after your event!
+                </p>
+
+                {/* Bullet points */}
+                <ul className="space-y-3 text-gray-700">
+                  <li className="flex items-start">
+                    <span className="text-[#FF4D67] mr-2 text-lg">✔</span>
+                    <span>Share as a link through email, SMS, chat apps etc.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#FF4D67] mr-2 text-lg">✔</span>
+                    <span>Share as a QR code on printed cards and signs.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#FF4D67] mr-2 text-lg">✔</span>
+                    <span>No app downloads. No registrations needed.</span>
+                  </li>
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* step-3 */}
+        <div className="py-12 md:py-6 bg-white">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+              {/* LEFT — Text */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex flex-col justify-center max-w-lg mx-auto md:mx-0"
+              >
+                {/* Step label */}
+                <div className="flex items-center mb-4">
+                  <div className="flex justify-center items-center mr-2 w-8 h-8 rounded-full bg-gradient-to-r from-[#FFB200] to-[#FF4D67] text-white font-semibold text-[14px] leading-none shadow-md">
+                    3
+                  </div>
+                  <span className="bg-gradient-to-r from-[#FFB200] to-[#FF4D67] bg-clip-text text-transparent font-bold text-lg">
+                    Step 3 (optional):
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-snug">
+                  Display it all on a live slideshow
+                </h2>
+
+                {/* Description */}
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  Up for some fun? Add to the event a <strong>Live Photo Wall</strong> (slideshow)
+                  that updates in real time with every photo and video added by you or
+                  your guests. Easily display it on projectors, TVs, tablets, or wherever you like.
+                </p>
+
+                {/* Button */}
+                <button className="inline-flex items-center w-fit justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-[#FFB200] to-[#FF4D67] hover:shadow-lg hover:scale-105 transition-all text-white border-0">
+                  See Live Example →
+                </button>
+              </motion.div>
+
+              {/* RIGHT — New Video Embed */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex justify-center md:justify-start"
+              >
+                <div className="relative max-w-md md:max-w-lg aspect-[2/2.6]  h-fit  ">
+                  <video
+                    className="w-full h-300px object-contain livePhotoWallDemo"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    poster="https://storage.googleapis.com/media.kululu.me/1_utils/website-assets/photo-wall-animation-poster.jpg"
+                  >
+                    <source
+                      src="https://storage.googleapis.com/media.kululu.me/1_utils/website-assets/photo-wall-example.mp4"
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
               </motion.div>
-            ))}
+
+            </div>
           </div>
-        </motion.div>
+        </div>
+
+        {/* step-4 */}
+        <div className="py-12 md:py-6 bg-white overflow-hidden">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+              {/* LEFT — Image + Floating Bubbles */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="relative flex justify-center md:justify-end"
+              >
+                {/* Main Album Image */}
+                <img
+                  src="https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65db09e75be9c83c1a745d1b_album-min.png"
+                  srcSet="
+                    https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65db09e75be9c83c1a745d1b_album-min-p-500.png 500w,
+                    https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65db09e75be9c83c1a745d1b_album-min-p-800.png 800w,
+                    https://cdn.prod.website-files.com/5ddbd5d1cd7d378da32a8223/65db09e75be9c83c1a745d1b_album-min-p-1080.png 1080w"
+                  alt="Event Photo Sharing App"
+                  className=" w-full max-w-md md:max-w-lg"
+                />
+
+                {/* Floating Bubbles */}
+                <motion.div
+                  animate={{ y: [-10, 10, -10] }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                  className="absolute top-10 left-4 bg-white/90 px-3 py-1 rounded-full shadow-md text-sm font-medium flex items-center gap-1"
+                >
+                  🌅 Candid Photos
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [10, -10, 10] }}
+                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+                  className="absolute bottom-2 left-4 bg-white/90 px-3 py-1 rounded-full shadow-md text-sm font-medium flex items-center gap-1"
+                >
+                  ❤️ Love
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [-15, 15, -15] }}
+                  transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+                  className="absolute top-10 right-6 bg-white/90 px-3 py-1 rounded-full shadow-md text-sm font-medium flex items-center gap-1"
+                >
+                  🎉 Celebrations
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [15, -15, 15] }}
+                  transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+                  className="absolute bottom-8 right-8 bg-white/90 px-3 py-1 rounded-full shadow-md text-sm font-medium flex items-center gap-1"
+                >
+                  📣 Greetings
+                </motion.div>
+              </motion.div>
+
+              {/* RIGHT — Text div */}
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="flex flex-col justify-center max-w-lg mx-auto md:mx-0"
+              >
+                {/* Step label */}
+                <div className="flex items-center mb-4">
+                  <div className="flex justify-center items-center mr-2 w-8 h-8 rounded-full bg-gradient-to-r from-[#FFB200] to-[#FF4D67] text-white font-semibold text-[14px] leading-none shadow-md ">
+                    4
+                  </div>
+                  <span className="bg-gradient-to-r from-[#FFB200] to-[#FF4D67] bg-clip-text text-transparent font-semibold text-lg hover:drop-shadow-md transition-all">
+                    Step 4:
+                  </span>
+
+                </div>
+
+                {/* Title */}
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-snug">
+                  Enjoy all captured moments
+                </h2>
+
+                {/* Description */}
+                <p className="text-gray-600 mb-6 leading-relaxed">
+                  At any given moment you can view all the photos and videos captured by
+                  your guests in your own digital album. Revisit and cherish those
+                  unforgettable memories!
+                </p>
+
+                {/* Bullet Points */}
+                <ul className="space-y-3 text-gray-700 mb-8">
+                  <li className="flex items-start">
+                    <span className="text-[#FF00B8] mr-2 text-lg">✔</span>
+                    <span>Every moment is captured in a stunning digital album.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-[#FF00B8] mr-2 text-lg">✔</span>
+                    <span>Download everything as a zipped folder in a click.</span>
+                  </li>
+                </ul>
+
+                {/* Button */}
+                <button className="inline-flex items-center w-fit justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 bg-gradient-to-r from-[#FFB200] to-[#FF4D67] hover:shadow-lg hover:scale-105 transition-all text-white border-0">
+                  Create Your Event
+                </button>
+              </motion.div>
+
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Use Cases Preview Section */}

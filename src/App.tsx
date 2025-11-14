@@ -12,19 +12,37 @@ import { Toaster } from "./components/ui/sonner";
 import { AuthForm } from "./components/AuthForm";
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState("home");
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login"); // 👈 added
+  const [currentPage, setCurrentPage] = useState(() => {
+    // 👇 if token already exists, go to dashboard directly
+    return localStorage.getItem("authToken") ? "dashboard" : "home";
+  });
+
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
 
-  // 👇 updated navigation to support mode
+  // ✅ Handle navigation between pages
   const handleNavigate = (page: string, mode: "login" | "signup" = "login") => {
     if (page === "login") setAuthMode(mode);
-    setCurrentPage(page);
+
+    // ✅ Redirect to dashboard after login if token exists
+    if (page === "login" && localStorage.getItem("authToken")) {
+      setCurrentPage("dashboard");
+    } else {
+      setCurrentPage(page);
+    }
   };
 
+  // ✅ Logout handler
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userName");
+    setCurrentPage("home");
+  };
+
+  // ✅ Render current page
   const renderPage = () => {
     switch (currentPage) {
       case "home":
@@ -40,21 +58,33 @@ export default function App() {
       case "contact":
         return <ContactPage onNavigate={handleNavigate} />;
       case "dashboard":
-        return <HostDashboard onNavigate={handleNavigate} />;
+        // ✅ Only show dashboard if logged in
+        return localStorage.getItem("authToken") ? (
+          <HostDashboard onNavigate={handleNavigate} />
+        ) : (
+          <AuthForm onNavigate={handleNavigate} defaultView="login" />
+        );
       case "login":
-        return <AuthForm onNavigate={handleNavigate} defaultView={authMode} />; // 👈 passes login/signup
+        return <AuthForm onNavigate={handleNavigate} defaultView={authMode} />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
   };
 
-  const hideLayout = currentPage === "login";
-
   return (
     <div className="min-h-screen bg-white">
-      {!hideLayout && <Navbar currentPage={currentPage} onNavigate={handleNavigate} />}
+      {/* ✅ Navbar hides only on login page */}
+      {currentPage !== "login" && (
+        <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
+      )}
+
       <main>{renderPage()}</main>
-      {!hideLayout && <Footer onNavigate={handleNavigate} />}
+
+      {/* ✅ Footer hides on login & dashboard pages */}
+      {currentPage !== "login" && currentPage !== "dashboard" && (
+        <Footer onNavigate={handleNavigate} />
+      )}
+
       <Toaster />
     </div>
   );

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import {
   Plus,
@@ -15,14 +16,168 @@ import {
   ExternalLink,
   Sparkles,
   TrendingUp,
+  Folder,
+  LogOut,
+  User,
+  Home,
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
+import { Modal } from "./ui/modal";
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import EventForm from './Eventform';
+
 
 interface HostDashboardProps {
   onNavigate: (page: string) => void;
 }
+
+interface HostSidebarProps {
+  onNavigate: (page: string) => void;
+  events: { id: number; name: string }[];
+  userEmail?: string;
+  hostId?: string;
+}
+
+function HostSidebar({
+  onNavigate,
+  events,
+  userEmail = 'dixitaryamind@gmail.com',
+  hostId = '#EPL-1023',
+}: HostSidebarProps) {
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openCreateEvent, setOpenCreateEvent] = useState(false);
+
+
+  // Fallback: normal useState if above hack not needed
+  // Note: The file already imports React hooks elsewhere; if not, this will still work at runtime.
+
+  return (
+    <>
+      {/* Sidebar */}
+      <aside className="hidden md:flex flex-col w-72 bg-white border-r border-gray-100 shadow-md fixed top-0 left-0 bottom-0">
+        {/* Logo / Header */}
+        <div className="px-6 py-5 border-b border-gray-100">
+          <h2 className="text-2xl font-semibold bg-gradient-to-r from-[white] to-[white] bg-clip-text text-transparent">
+            Event Platform
+          </h2>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 space-y-6">
+          {/* Create Event */}
+          <div>
+            <Button
+              onClick={() => setOpenCreateEvent(true)}
+              className="w-full bg-gradient-to-r from-[#FFB200] to-[#FF4D67] hover:shadow-xl hover:scale-105 transition-all text-white font-medium py-5 mt-2"
+            >
+              <Plus className="mr-2 w-5 h-5" />
+              Create New Event
+            </Button>
+          </div>
+
+          {/* View All with dropdown */}
+          <div className="relative">
+            <Button
+              variant="outline"
+              className="w-full flex justify-between items-center py-5"
+              onClick={() => setOpenDropdown(!openDropdown)}
+            >
+              <span className="flex items-center gap-2">
+                <Folder className="w-4 h-4" />
+                View All Events
+              </span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${openDropdown ? "rotate-180" : ""
+                  }`}
+              />
+            </Button>
+
+            {openDropdown && (
+              <div className="mt-2 bg-gray-50 rounded-xl shadow-inner p-2 border border-gray-100 space-y-1">
+                {events.map((ev) => (
+                  <button
+                    key={ev.id}
+                    onClick={() => onNavigate(`event/${ev.id}`)}
+                    className="block w-full text-left text-sm px-4 py-2 rounded-lg hover:bg-white"
+                  >
+                    {ev.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Middle Links */}
+          <div className="space-y-2 pt-4 border-t border-gray-100">
+            <button
+              onClick={() => onNavigate("home")}
+              className="flex items-center w-full gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"
+            >
+              <Home className="w-5 h-5 text-[#FF4D67]" />
+              Home
+            </button>
+
+            <button
+              onClick={() => onNavigate("photos")}
+              className="flex items-center w-full gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"
+            >
+              <ImageIcon className="w-5 h-5 text-[#FFB200]" />
+              Photos & Videos
+            </button>
+
+            <button
+              onClick={() => onNavigate("events")}
+              className="flex items-center w-full gap-3 px-4 py-3 rounded-lg hover:bg-gray-100 transition"
+            >
+              <Calendar className="w-5 h-5 text-[#FF4D67]" />
+              Events
+            </button>
+          </div>
+        </nav>
+
+        {/* Bottom User Section */}
+        <div className="border-t border-gray-100 px-6 py-5">
+          <div className="flex items-center gap-3 mb-3">
+            <User className="w-8 h-8 text-[#FF4D67]" />
+            <div>
+              <p className="text-sm font-medium">{userEmail}</p>
+              <p className="text-xs text-gray-500">Host ID: {hostId}</p>
+            </div>
+          </div>
+          <div className="space-y-1">
+            <button
+              onClick={() => onNavigate("account")}
+              className="block w-full text-left text-sm px-3 py-2 rounded-lg hover:bg-gray-100"
+            >
+              Manage Account
+            </button>
+            <button
+              onClick={() => onNavigate("myevents")}
+              className="block w-full text-left text-sm px-3 py-2 rounded-lg hover:bg-gray-100"
+            >
+              My Events
+            </button>
+            <button
+              onClick={() => onNavigate("logout")}
+              className="block w-full text-left text-sm px-3 py-2 rounded-lg hover:bg-gray-100 flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      {/* Popup Form Here */}
+      <Modal open={openCreateEvent} onClose={() => setOpenCreateEvent(false)}>
+        <EventForm />
+      </Modal>
+    </>
+  );
+}
+
 
 export function HostDashboard({ onNavigate }: HostDashboardProps) {
   const fadeInUp = {
@@ -129,7 +284,14 @@ export function HostDashboard({ onNavigate }: HostDashboardProps) {
   };
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-br from-gray-50 to-[#B8E4D0]/10">
+    <div className="relative min-h-screen pt-20 bg-gradient-to-br from-gray-50 to-[#B8E4D0]/10"
+      style={{
+        marginLeft: window.innerWidth >= 768 ? "18rem" : "0",
+        position: "relative",
+        zIndex: 1,
+      }}
+    >
+      <HostSidebar onNavigate={onNavigate} events={events} userEmail={'dixitaryamind@gmail.com'} hostId={'#EPL-1023'} />
       {/* Header */}
       <section className="py-12 bg-white border-b border-gray-100">
         <motion.div
@@ -341,7 +503,7 @@ export function HostDashboard({ onNavigate }: HostDashboardProps) {
                     <Button
                       onClick={() => onNavigate('faq')}
                       variant="outline"
-                      className="border-2 border-white text-white hover:bg-white hover:text-[#FF4D67]"
+                      className="bg-white text-[#FF4D67] hover:bg-gray-100"
                     >
                       View FAQs
                     </Button>

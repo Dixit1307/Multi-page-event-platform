@@ -9,7 +9,7 @@ export function AuthForm({
   onNavigate: (page: string, mode?: "login" | "signup") => void;
   defaultView?: "login" | "signup";
 }) {
-  const [view, setView] = useState<"login" | "signup" | "forgot">(defaultView);
+  const [view, setView] = useState<"login" | "signup" | "forgot">(defaultView as "login" | "signup" | "forgot");
   const [showPassword, setShowPassword] = useState(false);
 
   // Form state
@@ -64,7 +64,7 @@ export function AuthForm({
       alert("Login successful!");
       setLoading(false);
 
-      onNavigate("home"); // redirect to home after login
+      onNavigate("dashboard"); // redirect to dashboard after login
     } catch (err) {
       setError("Login error: " + (err as Error).message);
       setLoading(false);
