@@ -3,8 +3,9 @@ import session from "express-session";
 import passport from "passport";
 import cors from "cors";
 import dotenv from "dotenv";
-import "./passport/googleStrategy.ts";
-import { authRouter } from "./routes/authRoutes.js"; 
+import "./passport/googleStrategy.js";
+import authRouter from "./routes/authRoutes.js";  // ✅ default import
+import eventRouter from "./routes/eventRoutes.js"; // ✅ default import
 
 dotenv.config();
 const app = express();
@@ -30,6 +31,7 @@ app.use(passport.session());
 
 // ✅ Routes
 app.use("/api/auth", authRouter);
+app.use("/api/events", eventRouter);
 
 // ✅ Default route
 app.get("/", (req, res) => {

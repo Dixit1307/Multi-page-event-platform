@@ -1,5 +1,5 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -7,14 +7,14 @@ const prisma = new PrismaClient();
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL as string,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    async (_accessToken, _refreshToken, profile: Profile, done) => {
+    async (_accessToken, _refreshToken, profile, done) => {
       try {
         const email = profile.emails?.[0].value;
-        if (!email) return done(new Error("No email found in Google profile"));
+        if (!email) return done(new Error("No email found"));
 
         let user = await prisma.user.findUnique({ where: { email } });
 
@@ -30,22 +30,22 @@ passport.use(
 
         return done(null, user);
       } catch (err) {
-        return done(err as Error);
+        return done(err);
       }
     }
   )
 );
 
-// ✅ Serialize user (stores user ID in session)
-passport.serializeUser((user: any, done) => {
+// Serialize
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// ✅ Deserialize user (retrieves user from DB)
-passport.deserializeUser(async (id: number, done) => {
+// Deserialize
+passport.deserializeUser(async (id, done) => {
   try {
     const user = await prisma.user.findUnique({ where: { id } });
-    done(null, user || null);
+    done(null, user);
   } catch (err) {
     done(err, null);
   }
